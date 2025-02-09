@@ -1,10 +1,19 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from app.adapters.repositories.base import Base
 
+# core/models/task.py
 class Task(Base):
     __tablename__ = "tasks"
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    completed = Column(Boolean)
+    user_id = Column(Integer)
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, nullable=False)
-    completed = Column(Boolean, default=False)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "completed": self.completed,
+            "user_id": self.user_id
+        }

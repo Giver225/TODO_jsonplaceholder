@@ -1,0 +1,122 @@
+:root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --accent-color: #64ffda;
+    --input-bg-color: #212121;
+    --button-bg-color: #333333;
+    --button-hover-bg-color: #444444;
+    --task-bg-color: #282828;
+    --completed-task-bg-color: #37474f;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1, h2 {
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Стили для страницы авторизации и регистрации */
+#auth {
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#auth h2 {
+    margin-top: 0;
+}
+
+#loginForm, #registerForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+/* Стили для страницы задач */
+#logoutButton {
+    align-self: flex-start;
+    margin-bottom: 20px;
+}
+
+#createTaskForm {
+    display: flex;
+    width: 80%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+#taskTitle {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+#taskList {
+    list-style: none;
+    padding: 0;
+    width: 80%;
+    max-width: 600px;
+}
+
+#taskList li {
+    background-color: var(--task-bg-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#taskList li.completed {
+    background-color: var(--completed-task-bg-color);
+    opacity: 0.7;
+}
+
+#taskList li button {
+    margin-left: 10px;
+}
+
+/* Стили для скрытия контента */
+.hidden {
+    display: none;
+}
+

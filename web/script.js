@@ -70,16 +70,7 @@ if (window.location.pathname === "/tasks") {
                 return response.json();
             }
         })
-        // .then(data => {
-        //     if (data) {
-        //         console.log(data);
-                
-        //         loadTasks(data);  // Загружаем задачи
-        //     }
-        // })
-        // .catch(error => {
-        //     console.error("Error:", error);
-        // });
+
     }
 
     // Функция для загрузки задач

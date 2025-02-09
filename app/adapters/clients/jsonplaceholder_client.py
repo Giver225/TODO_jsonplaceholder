@@ -17,3 +17,9 @@ class JSONPlaceholderClient:
         response = requests.put(f"{self.BASE_URL}/todos/{task_id}", json=task_data)
         response.raise_for_status()
         return response.json()
+    
+    def delete_task(self, task_id):
+        response = requests.delete(f"{self.BASE_URL}/todos/{task_id}")
+        response.raise_for_status()
+        return response.json()
+    

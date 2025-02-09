@@ -19,6 +19,8 @@ from app.api.routes.auth import router as auth_router
 app.include_router(tasks_router)
 app.include_router(auth_router)
 
+
+
 @app.get("/")
 def read_root():
     return {"message": "Hello, World!"}

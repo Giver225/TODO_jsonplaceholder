@@ -52,4 +52,5 @@ def read_users_me(current_user: User = Depends(get_current_user)):
 
 @router.get("/check_token")
 def check_token(current_user: User = Depends(get_current_user)):
+    logger.info(f"Token check for user: {current_user.username}")
     return {"message": "Token is valid"}

@@ -2,8 +2,14 @@
 <html>
 <head>
     <title>Tasks</title>
+    <style>
+        /* Скрываем контент по умолчанию */
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-<body>
+<body class="hidden">
     <h1>Task Manager</h1>
     <button id="logoutButton">Logout</button>
     <form id="createTaskForm">
@@ -11,6 +17,6 @@
         <button type="submit">Create Task</button>
     </form>
     <ul id="taskList"></ul>
-    <script src="script.js"></script>
+    <script src="script.js?v4"></script>
 </body>
 </html>

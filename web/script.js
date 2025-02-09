@@ -1,6 +1,7 @@
 // Общие функции для обеих страниц
 let token = localStorage.getItem("token");
 
+
 // Логика для страницы авторизации
 if (window.location.pathname === "/") {
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -43,7 +44,45 @@ if (window.location.pathname === "/") {
     });
 }
 
-// Функция для загрузки задач
+
+// Логика для страницы задач
+if (window.location.pathname === "/tasks") {
+    // Проверка токена перед загрузкой контента
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.href = "/";  // Перенаправляем на страницу авторизации
+    } else {
+        fetch("/api.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ action: "check_token", token }),
+        })
+        .then(response => {
+            if (response.status === 401) {  // Unauthorized
+                localStorage.removeItem("token");
+                window.location.href = "/";
+            } else {
+                // Если токен валиден, отображаем контент
+                document.body.classList.remove("hidden");
+                return response.json();
+            }
+        })
+        // .then(data => {
+        //     if (data) {
+        //         console.log(data);
+                
+        //         loadTasks(data);  // Загружаем задачи
+        //     }
+        // })
+        // .catch(error => {
+        //     console.error("Error:", error);
+        // });
+    }
+
+    // Функция для загрузки задач
 function loadTasks(tasks) {
     const taskList = document.getElementById("taskList");
     taskList.innerHTML = "";  // Очищаем список задач
@@ -66,8 +105,8 @@ function loadTasks(tasks) {
     });
 }
 
-// Логика для страницы задач
-if (window.location.pathname === "/tasks") {
+
+
     // Обработчик для кнопки выхода
     document.getElementById("logoutButton").addEventListener("click", () => {
         localStorage.removeItem("token");  // Удаляем токен

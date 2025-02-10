@@ -35,12 +35,12 @@ class TaskService:
             # Логирование ошибки кэша, но продолжаем работу
             return self._get_tasks_from_db(user_id)
 
-    def create_task(self, user_id: int, title: str):
+    def create_task(self, user_id: int, title: str, completed: bool = False):
         try:
             with SessionLocal() as db:
                 max_id = self.db.query(func.max(Task.id)).scalar()
                 new_id = (max_id or 0) + 1
-                task = Task(id = new_id, title=title, user_id=user_id)
+                task = Task(id = new_id, title=title, user_id=user_id, completed=completed)
                 db.add(task)
                 db.commit()
                 db.refresh(task)

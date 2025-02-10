@@ -1,6 +1,16 @@
 // Общие функции для обеих страниц
 let token = localStorage.getItem("token");
 
+// Функция для отображения сообщений об ошибках (можно заменить на модальное окно)
+function showError(message) {
+    alert(message);
+}
+
+// Функция для отображения сообщений об успехе (можно заменить на модальное окно)
+function showSuccess(message) {
+    alert(message);
+}
+
 
 // Логика для страницы авторизации
 if (window.location.pathname === "/") {
@@ -8,6 +18,7 @@ if (window.location.pathname === "/") {
         e.preventDefault();
         const username = document.getElementById("loginUsername").value;
         const password = document.getElementById("loginPassword").value;
+    
         const response = await fetch("/api.php", {
             method: "POST",
             headers: {
@@ -15,12 +26,30 @@ if (window.location.pathname === "/") {
             },
             body: JSON.stringify({ action: "login", username, password }),
         });
-        const result = await response.json();
-        if (result.access_token) {
-            localStorage.setItem("token", result.access_token);
-            window.location.href = "/tasks";
-        } else {
-            alert("Login failed: " + (result.detail || "Unknown error"));
+    
+        try {
+            const result = await response.json();
+    
+            if (response.ok) {  // Проверяем HTTP-статус
+                if (result.access_token) {
+                    localStorage.setItem("token", result.access_token);
+                    window.location.href = "/tasks";
+                } else {
+                    alert("Login failed: " + (result.detail || "Unknown error"));
+                }
+            }
+            else {
+                // Обрабатываем ошибку
+                
+                if (result.error == "HTTP error: 401 - {\"detail\":\"Incorrect username or password\"}") {
+                    alert("Incorrect username or password. Please try again.");
+                } else {
+                    alert("Login failed: " + (result.error || "Unknown error"));
+                }
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred during login.");
         }
     });
 
@@ -28,6 +57,7 @@ if (window.location.pathname === "/") {
         e.preventDefault();
         const username = document.getElementById("registerUsername").value;
         const password = document.getElementById("registerPassword").value;
+    
         const response = await fetch("/api.php", {
             method: "POST",
             headers: {
@@ -35,13 +65,32 @@ if (window.location.pathname === "/") {
             },
             body: JSON.stringify({ action: "register", username, password }),
         });
-        const result = await response.json();
-        if (result.message === "User registered successfully") {
-            alert("User registered successfully");
-        } else {
-            alert("Registration failed: " + (result.detail || "Unknown error"));
+    
+        try {
+            const result = await response.json();
+    
+            if (response.ok) {
+                console.log(result);
+                
+                if (result.message === "User registered successfully") {
+                    alert("User registered successfully");
+                } else {
+                    alert("Registration failed: " + (result.detail || "Unknown error"));
+                }
+            } else {
+                // Обрабатываем ошибку
+                if (result.error && result.error == 'HTTP error: 400 - {"detail":"Username already registered"}') {
+                    alert("This username is already taken. Please choose a different one.");
+                } else {
+                    alert("Registration failed: " + (result.error || "Unknown error"));
+                }
+            }
+        } catch (error) {
+            console.error("Registration error:", error);
+            alert("An error occurred during registration.");
         }
     });
+    
 }
 
 

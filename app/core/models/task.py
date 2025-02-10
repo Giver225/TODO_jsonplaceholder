@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from app.adapters.repositories.base import Base
 
-# core/models/task.py
+
 class Task(Base):
     __tablename__ = "tasks"
     

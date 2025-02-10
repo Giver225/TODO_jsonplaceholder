@@ -1,6 +1,6 @@
 import asyncio
 from temporalio.client import Client
-from app.core.workflows.task_workflow import TaskWorkflow
+from app.core.workflows.sync_workflow import TaskWorkflow
 
 async def main():
     client = await Client.connect("localhost:7233")
